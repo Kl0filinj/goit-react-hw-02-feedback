@@ -19,7 +19,7 @@ const Options = ({ onClick, options }) => {
 
 Options.propTypes = {
   onClick: PropTypes.func.isRequired,
-  options: PropTypes.arrayOf(PropTypes.string),
+  options: PropTypes.arrayOf(PropTypes.string.isRequired),
 };
 
 export default Options;
