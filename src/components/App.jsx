@@ -30,7 +30,10 @@ export class App extends Component {
     return (
       <>
         <Section title={'Select an option'}>
-          <Options onClick={this.btnOptionHandler} />
+          <Options
+            onClick={this.btnOptionHandler}
+            options={Object.keys(this.state)}
+          />
         </Section>
         <Section title={'Stats'}>
           {countTotalFeedback !== 0 ? (

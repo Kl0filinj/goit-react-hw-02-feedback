@@ -1,28 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Options = ({ onClick }) => {
+const Options = ({ onClick, options }) => {
   const onClickHandler = e => {
     onClick(e.target.dataset.name);
   };
 
   return (
     <>
-      <button onClick={onClickHandler} data-name="good">
-        Good
-      </button>
-      <button onClick={onClickHandler} data-name="bad">
-        Bad
-      </button>
-      <button onClick={onClickHandler} data-name="neutral">
-        Neutral
-      </button>
+      {options.map(item => (
+        <button onClick={onClickHandler} data-name={item} key={item}>
+          {item}
+        </button>
+      ))}
     </>
   );
 };
 
 Options.propTypes = {
   onClick: PropTypes.func.isRequired,
+  options: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default Options;
