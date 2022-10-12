@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Options = ({ onClick, options }) => {
+export default function Options({ onClick, options }) {
   const onClickHandler = e => {
     onClick(e.target.dataset.name);
   };
-
   return (
     <>
       {options.map(item => (
@@ -15,11 +14,9 @@ const Options = ({ onClick, options }) => {
       ))}
     </>
   );
-};
+}
 
 Options.propTypes = {
   onClick: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(PropTypes.string),
 };
-
-export default Options;

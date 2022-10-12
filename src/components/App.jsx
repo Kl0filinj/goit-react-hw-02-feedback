@@ -1,55 +1,63 @@
-import React, { Component } from 'react';
+import { useState } from 'react';
 import Options from './Options';
 import Statistics from './Statistics';
 import Section from './Section';
 
-export class App extends Component {
-  state = {
-    good: 0,
-    neutral: 0,
-    bad: 0,
+export const App = () => {
+  // state = {
+  //   good: 0,
+  //   neutral: 0,
+  //   bad: 0,
+  // };
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
+
+  const btnOptionHandler = btnData => {
+    switch (btnData) {
+      case 'good':
+        setGood(prevState => prevState + 1);
+        break;
+      case 'neutral':
+        setNeutral(prevState => prevState + 1);
+        break;
+      case 'bad':
+        setBad(prevState => prevState + 1);
+        break;
+      default:
+        break;
+    }
   };
 
-  btnOptionHandler = btnData => {
-    this.setState(prevState => ({
-      [btnData]: prevState[btnData] + 1,
-    }));
-  };
+  // const { good, bad, neutral } = this.state;
 
-  render() {
-    const { good, bad, neutral } = this.state;
+  const countTotalFeedback = good + neutral + bad;
+  const countPositiveFeedbackPercentage = `${Math.round(
+    (good / countTotalFeedback) * 100
+  )}%`;
 
-    const countTotalFeedback = Object.values(this.state).reduce(
-      (acc, num) => (acc += num),
-      0
-    );
-    const countPositiveFeedbackPercentage = `${Math.round(
-      (good / countTotalFeedback) * 100
-    )}%`;
-
-    return (
-      <>
-        <Section title={'Select an option'}>
-          <Options
-            onClick={this.btnOptionHandler}
-            options={Object.keys(this.state)}
-          />
-        </Section>
-        <Section title={'Stats'}>
-          {countTotalFeedback !== 0 ? (
-            <Statistics
-              good={good}
-              neutral={neutral}
-              bad={bad}
-              total={countTotalFeedback}
-              positivePercentage={countPositiveFeedbackPercentage}
-            ></Statistics>
-          ) : (
-            <p>None Here ^_^</p>
-          )}
-        </Section>
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <Section title={'Select an option'}>
+        <Options
+          onClick={btnOptionHandler}
+          options={['good', 'neutral', 'bad']}
+        />
+      </Section>
+      <Section title={'Stats'}>
+        {countTotalFeedback !== 0 ? (
+          <Statistics
+            good={good}
+            neutral={neutral}
+            bad={bad}
+            total={countTotalFeedback}
+            positivePercentage={countPositiveFeedbackPercentage}
+          ></Statistics>
+        ) : (
+          <p>None Here ^_^</p>
+        )}
+      </Section>
+    </>
+  );
+};
 //
